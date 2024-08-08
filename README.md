@@ -14,6 +14,8 @@ The component is exactly as the spring chain:
 
 Once built you can see the usual spring parameters plus the new ones exposed: 
 
+![image](https://github.com/user-attachments/assets/967c5e60-0436-4c3f-9d52-c2fc0c184b99)
+
 Gravity per sections 0 to 10
 
 Gravity direction pointing down (Y) per section
@@ -22,7 +24,10 @@ Use Ground. (infinite plane at 0.0.0) per section
 
 Collide softness when you connect some basic primitives to the collider list and radius
 
-![image](https://github.com/user-attachments/assets/967c5e60-0436-4c3f-9d52-c2fc0c184b99)
+![image](https://github.com/user-attachments/assets/14e556e4-8550-4f0b-9281-7f7957417107)
+
+
+
 
 
 Download the zip, and extract into your mGear shifter Classic components:
