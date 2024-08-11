@@ -33,3 +33,44 @@ Collide softness when you connect some basic primitives to the collider list and
 Download the zip, and extract into your mGear shifter Classic components:
 
 ![image](https://github.com/user-attachments/assets/6c38679d-1aca-42ee-84d6-d9c0e968f373)
+
+Also, to define the component when building you need to add these lines to the applyop.py, or overwrite the file in the zip provided.
+
+C:\Users\yourUserName\Documents\maya\modules\scripts\mgear\core
+
+def gear_springG_op(in_obj, goal=False):
+    """Apply mGear spring Gravity  node.
+
+    Arguments:
+        in_obj (dagNode): Constrained object.
+        goal (dagNode): By default is False.
+
+    Returns:
+        pyNode: Newly created node
+    """
+    if not goal:
+        goal = in_obj
+
+    node = pm.createNode("mgear_springGravityNode")
+
+    pm.connectAttr("time1.outTime", node + ".time")
+    dm_node = pm.createNode("decomposeMatrix")
+    pm.connectAttr(goal + ".parentMatrix", dm_node + ".inputMatrix")
+    pm.connectAttr(dm_node + ".outputTranslate", node + ".goal")
+
+    cm_node = pm.createNode("composeMatrix")
+    pm.connectAttr(node + ".output", cm_node + ".inputTranslate")
+
+    mm_node = pm.createNode("mgear_mulMatrix")
+
+    pm.connectAttr(cm_node + ".outputMatrix", mm_node + ".matrixA")
+    pm.connectAttr(in_obj + ".parentInverseMatrix", mm_node + ".matrixB")
+
+    dm_node2 = pm.createNode("decomposeMatrix")
+    pm.connectAttr(mm_node + ".output", dm_node2 + ".inputMatrix")
+    pm.connectAttr(dm_node2 + ".outputTranslate", in_obj + ".translate")
+
+    pm.setAttr(node + ".stiffness", 0.5)
+    pm.setAttr(node + ".damping", 0.5)
+
+    return node
